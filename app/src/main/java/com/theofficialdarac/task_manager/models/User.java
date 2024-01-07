@@ -1,0 +1,108 @@
+package com.theofficialdarac.task_manager.models;
+
+public class User {
+    private Integer ID;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    private User() {
+        this.ID = 0;
+        this.username = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.email = "";
+        this.password = "";
+    }
+
+    public User(Integer ID, String username, String email, String password, String firstName, String lastName) {
+        this.ID = ID;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public void setUserID(Integer id) {
+        this.ID = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+
+        if (isValidEmailAddress(email))
+            this.email = email;
+    }
+
+    public Integer getID() {
+        return ID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public static boolean isValidEmailAddress(String email) {
+        email = email.trim();
+        if (email.length() > 100) return false;
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
+    public static boolean isValidUsername(String username) {
+        if ((username == null) || username == "" || username.trim().length() > 70)
+            return false;
+
+        return true;
+    }
+
+    public static boolean isValidFirstName(String firstName) {
+        if (firstName == null || firstName == "" || firstName.trim().length() > 100)
+            return false;
+        return true;
+    }
+
+    public static boolean isValidLastName(String lastName) {
+        if (lastName == null || lastName == "" || lastName.trim().length() > 100)
+            return false;
+        return true;
+    }
+
+}

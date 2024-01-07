@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+<!--  blacks  -->
+    <color name="black">#FF000000</color>
+    <color name="oxford_blue">#002147</color>
+    <color name="charcoal">#36454f</color>
+    <color name="dark_powder_blue">#000039</color>
+    <color name="eerie_black">#1b1b1b</color>
+
+<!--  grays  -->
+    <color name="dim_gray">#696969</color>
+    <color name="jet">#343434 </color>
+
+</resources>
