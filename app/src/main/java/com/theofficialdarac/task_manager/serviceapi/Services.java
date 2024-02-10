@@ -32,8 +32,7 @@ public interface Services {
     Call<Integer> postAppUser(@Query("username") String username, @Query("password") String password, @Query("email") String email, @Query("firstName") String firstName, @Query("lastName") String lastName);
     //endregion
 
-    //  --------------------------------------------------------------------------------------------
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     //region TaskServices
     @GET("TA/GETTasks.php")
     //  gets all tasks from db
@@ -43,25 +42,28 @@ public interface Services {
     Call<Task> getTask();
 
     @DELETE("TA/DELETETask.php")
-    Response deleteTask(@Query("ID") int ID);
+    Call<Void> deleteTask(@Query("ID") int ID);
 
     @GET("TA/GETTGTasks.php")
     Call<List<Task>> getTGTasks(@Query("taskGroupID") int TGID);
 
+    @POST("TA/POSTTask.php")
+    Call<Void> postTask(@Query("adminID") int userID, @Query("taskGroupID") int taskGroupID, @Query("title") String title, @Query("description") String description);
+
     //endregion
 
-    //  --------------------------------------------------------------------------------------------
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //region TaskGroupServices
-    @POST("UA/POSTTaskGroup.php")
+    @POST("TGA/POSTTG.php")
     //  make post request to server for TaskGroup creation
-    Call<User> postTaskGroup(@Query("adminID") int adminID, @Query("title") String title, @Query("description") String description);
+    Call<Void> postTaskGroup(@Query("adminID") int adminID, @Query("title") String title, @Query("description") String description);
 
     @GET("TGA/GETUTG.php")
     Call<List<TaskGroup>> getUserTGs(@Query("userID") int userID);
 
     @DELETE("TGA/DELTETG.php")
-    Response deleteTG(@Query("tgID") int taskGroupID);
+    Call<Void> deleteTG(@Query("tgID") int taskGroupID);
 
     //endregion
 }

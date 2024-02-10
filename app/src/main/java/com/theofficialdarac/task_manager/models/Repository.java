@@ -1,9 +1,12 @@
 package com.theofficialdarac.task_manager.models;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.theofficialdarac.task_manager.MainActivity;
 import com.theofficialdarac.task_manager.serviceapi.ApiManager;
 
 import java.util.List;
@@ -25,12 +28,22 @@ public class Repository {
         return instance;
     }
 
-    private User AppUser = null;
-    private MutableLiveData<User> mutableAppUser = new MutableLiveData<>();
+    private static User AppUser = null;
+    private static MutableLiveData<User> mutableAppUser = new MutableLiveData<>();
     private List<TaskGroup> TGs = null;
     private MutableLiveData<List<TaskGroup>> mutableTGs = new MutableLiveData<>();
     private List<Task> Tasks = null;
     private MutableLiveData<List<Task>> mutableTasks = new MutableLiveData<>();
+
+    public MutableLiveData<User> retrieveCurrentUser() {
+//        Log.d("USER_CURRENT", mutableAppUser.getValue().getUsername());
+        return mutableAppUser;
+    }
+
+    public void setUser(User user) {
+        AppUser = user;
+        mutableAppUser.setValue(AppUser);
+    }
 
     public MutableLiveData<List<Task>> getTasks(int taskGroupID) {
         ApiManager.getInstance().services().getTGTasks(taskGroupID)
@@ -52,9 +65,9 @@ public class Repository {
         return mutableTasks;
     }
 
-    public MutableLiveData<List<TaskGroup>> getTaskGroups() {
+    public MutableLiveData<List<TaskGroup>> getTaskGroups(int ID) {
 //        Log.d("MY_CUSTOM", AppUser.getUsername());
-        Call<List<TaskGroup>> call = ApiManager.getInstance().services().getUserTGs(1);
+        Call<List<TaskGroup>> call = ApiManager.getInstance().services().getUserTGs(ID);
         call.enqueue(new Callback<List<TaskGroup>>() {
             @Override
             public void onResponse(Call<List<TaskGroup>> call, Response<List<TaskGroup>> response) {
@@ -100,7 +113,9 @@ public class Repository {
                 Integer result = response.body();
                 if (result != null) {
                     AppUser = new User(result, username, email, password, firstName, lastName);
+//                    ((MainActivity)application.getApplicationContext()).setCurrentUser(AppUser);
                     mutableAppUser.setValue(AppUser);
+//                    Toast.makeText(application, AppUser.getUsername(), Toast.LENGTH_SHORT).show();
                 }
             }
 

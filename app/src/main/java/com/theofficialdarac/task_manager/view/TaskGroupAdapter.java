@@ -68,7 +68,7 @@ public class TaskGroupAdapter extends RecyclerView.Adapter<TaskGroupAdapter.View
 //                if(ApiManager.getInstance().services().deleteTG(lTGs.get(position).getID()).isSuccessful()) {
                     lTGs.remove(lTGs.get(position));
                     notifyItemRemoved(holder.getBindingAdapterPosition());
-                    notifyItemRangeRemoved(holder.getBindingAdapterPosition(), 1);
+//                    notifyItemRangeRemoved(holder.getBindingAdapterPosition(), 1);
 ////                }
 ////                else Toast.makeText(context, "Cannot delete item. Please try again later.", Toast.LENGTH_SHORT).show();
             }

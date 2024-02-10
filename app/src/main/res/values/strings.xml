@@ -2,6 +2,13 @@
     <string name="app_name">Just Do It</string>
     <string name="welcome">Welcome</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="view_tasks">View Tasks</string>
+    <string name="success">Success</string>
+    <string name="max_chars">Maximum number of Characters is </string>
+    <string name="min_chars">Minimum number of Characters is </string>
+    <string name="you_have"> you have </string>
 
     <!--  User  -->
     <string name="login">Login</string>
@@ -18,11 +25,24 @@
     <!--  Task Group  -->
     <string name="task_group_title">Task Group Title</string>
     <string name="task_group_description">Task Group Description</string>
+    <string name="add_task_group">Add task group</string>
+    <string name="title_task_groups">Your Task Groups</string>
+    <string name="task_group_name">The Name Of Your Task Group</string>
+    <string name="task_group_desc">The Description Of Your Task Group</string>
+    <string name="task_group_create">Create Task Group</string>
     <!--  Task Group END  -->
 
     <!--  Task  -->
     <string name="task_title">Task Title</string>
     <string name="task_description">Task Description</string>
+    <string name="task_show_all">Show all tasks</string>
+    <string name="task_create">Create Task</string>
+    <string name="task_title_min_error">Minimal title length is 3 characters</string>
+    <string-array name="task_state">
+        <item>To Do</item>
+        <item>W.I.P.</item>
+        <item>Done</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--  Task END  -->

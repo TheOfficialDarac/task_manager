@@ -1,5 +1,6 @@
 package com.theofficialdarac.task_manager;
 
+import android.icu.text.CaseMap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.button.MaterialButton;
 import com.theofficialdarac.task_manager.databinding.FragmentTaskGroupsBinding;
 import com.theofficialdarac.task_manager.view.TaskGroupAdapter;
 import com.theofficialdarac.task_manager.interfaces.ItemClickListener;
@@ -31,9 +33,11 @@ public class TaskGroupsFragment extends Fragment implements ItemClickListener {
     private SwipeRefreshLayout swipeRefreshLayout;
     private FragmentTaskGroupsBinding binding;
     private List<TaskGroup> taskGroups;
+    private int userID;
 
-    public TaskGroupsFragment() {
+    public TaskGroupsFragment(int userID) {
         // Required empty public constructor
+        this.userID = userID;
     }
 
     @Override
@@ -45,6 +49,18 @@ public class TaskGroupsFragment extends Fragment implements ItemClickListener {
                 R.layout.fragment_task_groups,
                 container,false
         );
+
+        getActivity().setTitle(getResources().getString(R.string.title_task_groups));
+
+        binding.mbtnAddTG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flMain, new CreateTGFragment(userID))
+                        .commit();
+            }
+        });
 
         myViewModel = new ViewModelProvider(requireActivity()).get(MyViewModel.class);
 
@@ -59,14 +75,11 @@ public class TaskGroupsFragment extends Fragment implements ItemClickListener {
 
         getTGs();
 
-//
         return binding.getRoot();
     }
 
     private void getTGs() {
-//        taskGroups = myViewModel.getAllUserTGs().getValue();
-//        displayTGs();
-        myViewModel.getAllUserTGs().observe(requireActivity(), new Observer<List<TaskGroup>>() {
+        myViewModel.getAllUserTGs(userID).observe(requireActivity(), new Observer<List<TaskGroup>>() {
             @Override
             public void onChanged(List<TaskGroup> taskGroupsFromLiveData) {
                 taskGroups = taskGroupsFromLiveData;
@@ -82,7 +95,7 @@ public class TaskGroupsFragment extends Fragment implements ItemClickListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter.setOnClickListener(this::customOnClick);
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
         if(swipeRefreshLayout.isRefreshing())
             swipeRefreshLayout.setRefreshing(false);
     }
@@ -91,7 +104,7 @@ public class TaskGroupsFragment extends Fragment implements ItemClickListener {
 //        Toast.makeText(getActivity(), myViewModel.getAllUserTGs().getValue().get(position).getTitle(), Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, new TaskGroupFragment(myViewModel.getAllUserTGs().getValue().get(position)))
+                .replace(R.id.flMain, new TaskGroupFragment(myViewModel.getAllUserTGs(userID).getValue().get(position)))
                 .commit();
     }
 }

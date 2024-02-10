@@ -7,9 +7,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiManager {
     static ApiManager instance;
     private final Services services;
-    private static final String BASE_URL = "http://192.168.0.5/PIN-3/PMA/";
-
     //  string with localhost and api call folder location
+    private static final String BASE_URL = "http://192.168.0.5/PIN-3/PMA/";
+//    private static final String BASE_URL = "http://192.168.4.214/PIN-3/PMA/";
+
     private ApiManager() {
         //  singleton constructor
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -21,7 +22,7 @@ public class ApiManager {
         services = retrofit.create(Services.class);
     }
 
-    public static ApiManager getInstance() {
+    public static synchronized ApiManager getInstance() {
         if (instance == null) {
             instance = new ApiManager();
         }

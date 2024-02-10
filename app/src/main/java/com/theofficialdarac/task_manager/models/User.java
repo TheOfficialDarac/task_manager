@@ -1,16 +1,29 @@
 package com.theofficialdarac.task_manager.models;
 
-public class User {
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+public class User extends BaseObservable {
     private Integer ID;
     private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private boolean isVerified;
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
 
     public void setPassword(String password) {
         this.password = password;
     }
+    @Bindable
 
     public String getPassword() {
         return password;
@@ -57,10 +70,10 @@ public class User {
             this.email = email;
     }
 
-    public Integer getID() {
+    public Integer getUserID() {
         return ID;
     }
-
+    @Bindable
     public String getUsername() {
         return username;
     }
@@ -87,14 +100,14 @@ public class User {
     }
 
     public static boolean isValidUsername(String username) {
-        if ((username == null) || username == "" || username.trim().length() > 70)
+        if ((username == null) || username == "" || username.trim().length() > 70 || username.trim().length() < 3)
             return false;
 
         return true;
     }
 
     public static boolean isValidFirstName(String firstName) {
-        if (firstName == null || firstName == "" || firstName.trim().length() > 100)
+        if (firstName == null || firstName == "" || firstName.trim().length() > 100  || firstName.trim().length() < 3)
             return false;
         return true;
     }

@@ -1,6 +1,9 @@
 package com.theofficialdarac.task_manager.models;
 
-public class Task {
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+public class Task extends BaseObservable {
     public enum State {
         todo,
         wip,
@@ -31,6 +34,7 @@ public class Task {
         this.ID = ID;
     }
 
+    @Bindable
     public String getTitle() {
         return title;
     }
@@ -47,6 +51,7 @@ public class Task {
         this.adminID = adminID;
     }
 
+    @Bindable
     public String getDescription() {
         return description;
     }

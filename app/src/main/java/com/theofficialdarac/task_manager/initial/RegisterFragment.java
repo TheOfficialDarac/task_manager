@@ -1,6 +1,8 @@
 package com.theofficialdarac.task_manager.initial;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.theofficialdarac.task_manager.MainActivity;
 import com.theofficialdarac.task_manager.R;
 import com.theofficialdarac.task_manager.TaskGroupsFragment;
 import com.theofficialdarac.task_manager.models.User;
@@ -114,11 +117,31 @@ public class RegisterFragment extends Fragment {
                 @Override
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                     if (response.body().equals(0)) {
-                        myViewModel.registerUser(username, password, email, firstName, lastName);
-                        getActivity().getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.flMain, new TaskGroupsFragment())
-                                .commit();
+                        ApiManager.getInstance().services().postAppUser(username, password, email, firstName, lastName).enqueue(new Callback<Integer>() {
+                            @Override
+                            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                if(response.isSuccessful()) {
+                                    Toast.makeText(getActivity(), "Registration Successful", Toast.LENGTH_SHORT).show();
+                                    getActivity().getSupportFragmentManager()
+                                            .beginTransaction()
+                                            .replace(R.id.flMain, new LoginFragment())
+                                            .commit();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Integer> call, Throwable t) {
+                                Toast.makeText(getActivity(), "Registration failed.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+//                        ((MainActivity)getActivity()).setCurrentUser(myViewModel.registerUser(username, password, email, firstName, lastName).getValue());
+//                            myViewModel.registerUser(username, password, email, firstName, lastName);
+//                            Log.d("USER_ID", tmp.getID().toString());
+//                        Toast.makeText(getActivity(), "Registration Successful", Toast.LENGTH_SHORT).show();
+//                        getActivity().getSupportFragmentManager()
+//                                .beginTransaction()
+//                                .replace(R.id.flMain, new LoginFragment())
+//                                .commit();
                     } else {
                         etrEmail.setText("");
                         etrEmail.setError("There is a user already registered to this email address.");

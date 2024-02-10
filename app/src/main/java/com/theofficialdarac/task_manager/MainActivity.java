@@ -3,7 +3,9 @@ package com.theofficialdarac.task_manager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.database.Observable;
 import android.os.Bundle;
 
 import com.theofficialdarac.task_manager.initial.LoginFragment;
@@ -13,13 +15,15 @@ import com.theofficialdarac.task_manager.viewmodel.MyViewModel;
 public class MainActivity extends AppCompatActivity {
 
     MyViewModel myViewModel;
-    public User currentUser;
+    private static User currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
         myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
+//        myViewModel.getInstance(getApplication());
 
         getSupportFragmentManager()
                 .beginTransaction()

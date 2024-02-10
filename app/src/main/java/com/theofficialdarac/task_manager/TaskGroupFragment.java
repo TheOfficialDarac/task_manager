@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.databinding.DataBindingUtil;
@@ -17,7 +15,7 @@ import com.theofficialdarac.task_manager.models.TaskGroup;
 
 public class TaskGroupFragment extends Fragment {
     private TaskGroup currentTG;
-    private FrameLayout frameLayout;
+    //    private FrameLayout frameLayout;
     FragmentTaskGroupBinding binding;
 
     public TaskGroupFragment(TaskGroup tg) {
@@ -34,16 +32,39 @@ public class TaskGroupFragment extends Fragment {
                 R.layout.fragment_task_group,
                 container, false
         );
-//        View rootView = inflater.inflate(R.layout.fragment_task_group, container, false);
 
-        getChildFragmentManager()
-                .beginTransaction()
-                .replace(R.id.flTG, new TasksFragment(currentTG.getID()))
-                .commit();
+        binding.setTaskGroup(currentTG);
 
-        binding.tvTGTitle.setText(currentTG.getTitle());
-        binding.tvTGDescription.setText(currentTG.getDescription());
+//        getChildFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.flTG, new TGTasksFragment(currentTG.getID()))
+//                .commit();
+        binding.btnAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flMain, new CreateTaskFragment(currentTG))
+                        .commit();
+            }
+        });
 
+        binding.btnViewTasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flMain, new TGTasksFragment(currentTG))
+                        .commit();
+            }
+        });
+
+        binding.btnEditTG.setOnClickListener(v -> {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.flMain, new TGTasksFragment(currentTG))
+                    .commit();
+        });
 
 
         requireActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
@@ -51,7 +72,7 @@ public class TaskGroupFragment extends Fragment {
             public void handleOnBackPressed() {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.flMain, new TaskGroupsFragment())
+                        .replace(R.id.flMain, new TaskGroupsFragment(((MainActivity) getActivity()).getCurrentUser().getUserID()))
                         .commit();
             }
         });
